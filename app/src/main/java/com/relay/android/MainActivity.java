@@ -1,24 +1,72 @@
 package com.relay.android;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+    private float lastX;
+    private float lastY;
+
+    private WebSocketClient webSocketClient;
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        webSocketClient = new WebSocketClient();
+        webSocketClient.connect("ws://192.168.0.115:8080/ws");
+
+        View trackpad = findViewById(R.id.main);
+        trackpad.setOnTouchListener((view, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    lastX = event.getX();
+                    lastY = event.getY();
+                    break;
+
+                case MotionEvent.ACTION_MOVE:
+                    float currX = event.getX();
+                    float currY = event.getY();
+
+                    float dx = currX - lastX;
+                    float dy = currY - lastY;
+
+                    lastX = currX;
+                    lastY = currY;
+
+                    String message = "{\"type\":\"move\",\"dx\":"
+                                    + dx +
+                                    ",\"dy\":"
+                                    + dy +
+                                    "}";
+
+                    webSocketClient.send(message);
+
+                    break;
+            }
+            return true;
         });
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
