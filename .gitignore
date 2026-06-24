@@ -1,0 +1,125 @@
+# =========================
+# Android Studio
+# =========================
+.idea/
+*.iml
+
+# =========================
+# Gradle
+# =========================
+.gradle/
+build/
+*/build/
+.kotlin/
+
+# =========================
+# Local machine config
+# =========================
+local.properties
+
+# Example:
+# local.properties.example can be committed
+
+# =========================
+# Environment files
+# =========================
+.env
+.env.*
+!.env.example
+
+secret.properties
+secrets.properties
+keystore.properties
+signing.properties
+
+# =========================
+# Android App Bundles
+# =========================
+*.apk
+*.aab
+*.ap_
+
+# =========================
+# Java / Kotlin
+# =========================
+*.class
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Android Navigation Editor
+# =========================
+.navigation/
+
+# =========================
+# Android Captures
+# =========================
+captures/
+
+# =========================
+# NDK
+# =========================
+.externalNativeBuild/
+.cxx/
+obj/
+
+# =========================
+# Keystores & Signing Keys
+# =========================
+*.jks
+*.keystore
+*.pem
+*.p12
+
+# =========================
+# Firebase / Google Services
+# =========================
+google-services.json
+firebase-config.json
+
+# =========================
+# Crashlytics
+# =========================
+com_crashlytics_export_strings.xml
+
+# =========================
+# Profiling
+# =========================
+*.hprof
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Temporary Files
+# =========================
+*.tmp
+*.temp
+*.swp
+*~
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+
+# =========================
+# JetBrains caches
+# =========================
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/shelf/
+
+# =========================
+# Generated files
+# =========================
+generated/
