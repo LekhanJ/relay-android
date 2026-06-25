@@ -1,10 +1,10 @@
-package com.relay.android;
+package com.relay.android.network;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.WebSocket;
 
-public class WebSocketClient {
+public class RelayWebSocketClient {
     private WebSocket webSocket;
 
     public void connect(String serverUrl) {

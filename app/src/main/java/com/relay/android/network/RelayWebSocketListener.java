@@ -1,4 +1,4 @@
-package com.relay.android;
+package com.relay.android.network;
 
 import androidx.annotation.NonNull;
 

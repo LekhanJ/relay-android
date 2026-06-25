@@ -34,6 +34,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.gson)
     implementation(libs.okhttp)
     implementation(libs.appcompat)
     implementation(libs.material)

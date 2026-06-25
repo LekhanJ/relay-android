@@ -2,17 +2,21 @@ package com.relay.android;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.relay.android.network.RelayClient;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.gson.Gson;
 
+public class MainActivity extends AppCompatActivity {
     private float lastX;
     private float lastY;
-
-    private WebSocketClient webSocketClient;
+    private RelayClient relayClient;
+    private final Gson gson = new Gson();
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -20,11 +24,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        webSocketClient = new WebSocketClient();
-        webSocketClient.connect("ws://192.168.0.115:8080/ws");
+        relayClient = new RelayClient("ws://192.168.0.115:8080/ws");
+
+        GestureDetector gestureDetector = new GestureDetector(
+                this,
+                new GestureDetector.SimpleOnGestureListener() {
+                    @Override
+                    public boolean onSingleTapConfirmed(MotionEvent e) {
+                        relayClient.leftClick();
+                        return true;
+                    }
+                }
+        );
 
         View trackpad = findViewById(R.id.main);
         trackpad.setOnTouchListener((view, event) -> {
+
+            gestureDetector.onTouchEvent(event);
+
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     lastX = event.getX();
@@ -41,13 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     lastX = currX;
                     lastY = currY;
 
-                    String message = "{\"type\":\"move\",\"dx\":"
-                                    + dx +
-                                    ",\"dy\":"
-                                    + dy +
-                                    "}";
-
-                    webSocketClient.send(message);
+                    relayClient.move((int)dx, (int)dy);
 
                     break;
             }
