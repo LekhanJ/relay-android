@@ -29,6 +29,19 @@ public class RelayClient {
         relayWebSocketClient.send(gson.toJson(message));
     }
 
+    public void rightClick() {
+        Message message = new Message();
+        message.type = MessageType.RIGHT_CLICK.getValue();
+        relayWebSocketClient.send(gson.toJson(message));
+    }
+
+    public void scroll(int amount) {
+        Message message = new Message();
+        message.type = MessageType.SCROLL.getValue();
+        message.amount = amount;
+        relayWebSocketClient.send(gson.toJson(message));
+    }
+
     public void disconnect() {
         relayWebSocketClient.disconnect();
     }
